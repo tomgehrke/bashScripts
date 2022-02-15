@@ -2,7 +2,6 @@
 # Install Desktop Customizations
 
 # PREPARATION --------------------
-sudo add-apt-repository ppa:rikmills/latte-dock
 sudo apt update
 
 # Install Git
@@ -27,5 +26,11 @@ wget -qO- https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-
 lookandfeeltool --apply Nordic
 
 # CLEANUP ------------------------
-# ToDo: check for existence of line first
+# ToDo: check for existence of lines first
+
+# Fix login screen on hiDPI display
 sudo echo -e "xrandr --output eDP-1 --mode 1920x1080 --rate 60.01" >> /usr/share/sddm/scripts/Xsetup
+
+# Fix GRUB menu on hiDPI display
+sudo echo -e "GRUB_GFXPAYLOAD=keep\nGRUB_TERMINAL=gfxterm\nGRUB_GFXMODE=800x600" >> /etc/default/grub 
+sudo update-grub 
