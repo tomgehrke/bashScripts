@@ -37,18 +37,18 @@ unzip ~/.poshthemes/themes.zip -d ~/.poshthemes
 chmod u+rw ~/.poshthemes/*.json
 rm ~/.poshthemes/themes.zip
 
-echo -e "\n# OH-MY-POSH\neval \"$(oh-my-posh --init --shell bash --config ~/mt.omp.json)\"" >> ~/.bashrc
+echo -e "\n# OH-MY-POSH\neval \"\$(oh-my-posh --init --shell bash --config ~/.poshthemes/mt.omp.json)\"" | tee --append ~/.bashrc
 source ~/.bashrc
 
 echo Download and install Nordic theme...
 echo ==============================================
 git clone https://github.com/EliverLara/Nordic ~/Nordic
-cp -a ~/Nordic/kde/* ~/.local/share
+cp --archive --force ~/Nordic/kde/* ~/.local/share
 mkdir -p ~/.config/Kvantum
-mv ~/.local/share/kvantum/Nordic* ~/.config/Kvantum/
-mv ~/.local/share/colorschemes ~/.local/share/color-schemes
+mv --force ~/.local/share/kvantum/Nordic* ~/.config/Kvantum/
+mv --force ~/.local/share/colorschemes ~/.local/share/color-schemes
 mkdir -p ~/.local/share/aurorae/themes # Window Decorations
-mv ~/.local/share/aurorae/Nordic* ~/.local/share/aurorae/themes/
+mv --force ~/.local/share/aurorae/Nordic* ~/.local/share/aurorae/themes/
 
 echo Download and install Papirus icons...
 echo ===============================================
@@ -56,7 +56,8 @@ wget -qO- https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-
 
 echo Download and install Caskaydia Cove NerdFont...
 echo ===============================================
-wget -qO- https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/CascadiaCode.zip | unzip -qo -d ~/.fonts
+wget -q https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/CascadiaCode.zip -O ~/CascadiaCode.zip
+unzip -qo ~/CascadiaCode.zip -d ~/.fonts
 fc-cache -fv
 
 # INSTALLATION -------------------
@@ -69,10 +70,15 @@ lookandfeeltool --apply Nordic-darker
 
 echo Fix login screen on hiDPI display...
 echo ===============================================
-sudo echo -e "xrandr --output eDP-1 --mode 1920x1080 --rate 60.01" >> /usr/share/sddm/scripts/Xsetup
+echo -e "xrandr --output eDP-1 --mode 1920x1080 --rate 60.01" | sudo tee --append /usr/share/sddm/scripts/Xsetup
 
 echo Fix GRUB menu on hiDPI display...
 echo ===============================================
-sudo echo -e "GRUB_GFXPAYLOAD=keep\nGRUB_TERMINAL=gfxterm\nGRUB_GFXMODE=800x600" >> /etc/default/grub 
+echo -e "GRUB_GFXPAYLOAD=keep\nGRUB_TERMINAL=gfxterm\nGRUB_GFXMODE=800x600" | sudo tee --append /etc/default/grub 
 sudo update-grub 
 
+# FINAL TOUCHES --------------------------
+
+echo Navigate to Nord Chrome/Edge theme...
+echo ===============================================
+xdg-open https://chrome.google.com/webstore/detail/nord/abehfkkfjlplnjadfcjiflnejblfmmpj
