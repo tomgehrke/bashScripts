@@ -79,6 +79,9 @@ sudo update-grub
 
 # FINAL TOUCHES --------------------------
 
+echo Select default browser...
+sudo update-alternatives --config x-www-browser
+
 echo Navigate to Nord Chrome/Edge theme...
 echo ===============================================
 xdg-open https://chrome.google.com/webstore/detail/nord/abehfkkfjlplnjadfcjiflnejblfmmpj
